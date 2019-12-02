@@ -1,0 +1,30 @@
+doctype html
+html(lang='en')
+	head
+	body
+		- console.log("test")
+		include ./partials/header
+		include ./partials/nav
+		.container
+			.row.mt-4
+				.col-12.col-md-6.offset-md-3
+					.input-group.mb-2.mr-sm-2
+						input#search.form-control(type='text', placeholder='Search Users')
+						.input-group-append
+							button#search-butn.btn-success(type='submit') Search
+			.row.mt-4
+				.col-12.col-md-6.offset-md-3
+					.row.users-wrapper
+		include ./partials/script
+		script.
+			$(document).ready(function() {
+				$("#search-butn").on("click", function(e) {
+					if ($("#search").val() != '') {
+						ajaxCall("/user", "GET", { term:  $("#search").val() }, function(response) {
+							$(".users-wrapper").html(response);
+						}, function(error) {
+							console.info(error);
+						});
+					}
+				});
+			});

@@ -1,0 +1,49 @@
+doctype html
+html(lang='en')
+	head
+	body
+		include ./partials/header
+		.container
+			.row.mt-5
+				.col-12.col-md-6.offset-md-3
+					.card.w-100
+						.card-body
+							p Login or Register using facebook
+							.fb-login-button(data-width='', data-size='large', data-button-type='continue_with', onlogin='checkLoginState();', data-auto-logout-link='false', data-use-continue-as='true')
+		include ./partials/script
+		script.
+			function checkLoginState() {
+				FB.getLoginStatus(function(response) {
+				if (response.status == "connected") {
+					FB.api('/me', function(personalResponse) {
+						response.info = personalResponse;
+						ajaxCall("/login", "post", response, function(response) {
+							window.location.href = "/";
+						}, function(error) {
+							location.reload();
+						});
+						console.log('Good to see you, ' + response.name + '.');
+					});
+				}
+				});
+			}
+			window.fbAsyncInit = function() {
+			FB.init({
+				appId: '2332091413768112',
+				cookie: true,
+				xfbml: true,
+				version: 'v4.0'
+			});
+			FB.AppEvents.logPageView();
+				checkLoginState();
+			};
+			(function(d, s, id) {
+				var js, fjs = d.getElementsByTagName(s)[0];
+				if (d.getElementById(id)) {
+					return;
+				}
+				js = d.createElement(s);
+				js.id = id;
+				js.src = "https://connect.facebook.net/en_US/sdk.js";
+				fjs.parentNode.insertBefore(js, fjs);
+			}(document, 'script', 'facebook-jssdk'));

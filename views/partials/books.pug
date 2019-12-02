@@ -1,0 +1,16 @@
+if (books.length)
+	each book, bookId in books
+		.col-12
+			.book-wrapper.card.p-2
+				.card-body.row
+					.col-4
+						//img.card-img-left.img-fluid 
+						img.img-fluid(src=`${book.image_url}`)
+						a(href=`/${book.image_url}` Link, alt='Card image')
+					.col-8
+						p.card-title.mb-0 Book Name : #{book.book_name}
+						p.card-title.mb-0 ISBN : #{book.id}
+						p.card-text.mb-0 Description : #{book.description}
+						button.btn.btn-danger.mark-unfavourite(data-id=`${book.id}`) Mark Not Favourite
+else
+	h3 No Books Available

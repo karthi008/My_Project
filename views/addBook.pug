@@ -1,0 +1,47 @@
+doctype html
+html(lang='en')
+	head
+	body
+		include ./partials/header
+		include ./partials/nav
+		.container
+			.row.mt-4
+				.col-12.col-md-6.offset-md-3
+					.input-group.mb-2.mr-sm-2
+						form#add-book.w-100
+							.form-group
+								label(for='bookName') Book Name:
+								input.form-control(type='text', name='bookName', placeholder='Book Name', required='')
+							.form-group
+								label(for='isbnNo') ISBN No:
+								input.form-control(type='text', name='isbnNo', placeholder='ISBN No', required='')
+							.form-group
+								label(for='imageUrl') Image Url:
+								input.form-control(type='text', name='imageUrl', placeholder='Image Url', required='')
+							.form-group
+								label(for='description') Description:
+								textarea.form-control(name='description', placeholder='Description', required='')
+							.form-group
+								input.btn.btn-success(type='submit', name='submit', value='Add book')
+			.row.mt-4
+				.col-12.col-md-6.offset-md-3
+					.row.books-wrapper
+		include ./partials/script
+		script.
+			$(document).ready(function() {
+				$("#add-book").on("submit", function(e) {
+						e.preventDefault();
+					ajaxCall("/book", "POST", $('#add-book').serializeArray().reduce(function(obj, item) {
+						obj[item.name] = item.value;
+						return obj;
+					}, {}), function(response) {
+						if (response.success) {
+							$("#add-book")[0].reset();
+						} else {
+							alert("cannot add book");
+						}
+					}, function(error) {
+						console.info(error);
+					});
+				});
+			});

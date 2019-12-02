@@ -1,0 +1,15 @@
+{
+	"apps" : [{
+		"name": "BookLibraryManagement",
+		"script": "./bin/www",
+		"watch": "./",
+		"watch_options": {
+			"followSymlinks": false,
+			"usePolling": true
+		},
+		"env": {
+			"NODE_ENV": "development",
+			"PORT": 3001
+		}
+	}]
+}

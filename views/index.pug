@@ -1,0 +1,33 @@
+doctype html
+html(lang='en')
+	head
+	body
+		include ./partials/header
+		include ./partials/nav
+		.container
+			.row.mt-4
+				.col-12.col-md-6.offset-md-3
+					.input-group.mb-2.mr-sm-2
+						input#search.form-control(type='text', placeholder='Search Books')
+						.input-group-append
+							button#search-butn.btn-success(type='submit') Submit
+			.row.mt-4
+				.col-12.col-md-6.offset-md-3
+					.row.books-wrapper
+		include ./partials/script
+		script.
+			$(document).ready(function() {
+				$("#search-butn").on("click", function(e) {
+					if ($("#search").val() != '') {
+						ajaxCall("/book", "GET", {
+							term: $("#search").val()
+						}, function(response) {
+							console.info(response);
+							$(".books-wrapper").html(response);
+							}, function(error) {
+							console.info(error);
+							// $(".books-wrapper").html(response);
+						});
+					}
+				});
+			});

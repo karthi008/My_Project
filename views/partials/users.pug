@@ -1,0 +1,13 @@
+if (users.length)
+	each user, usersId in users
+		.col-12
+			.user-wrapper.card.p-2
+				.card-body.row
+					.col-12
+						p.card-title.mb-0
+							a(href=`/user/${user.id}`)
+								b User Name : #{user.userName}
+					if(editInfo)
+						p.card-title.mb-0 Favourites Count : #{user.bookCount}
+else
+	h3 No Search Users
